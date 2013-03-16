@@ -12,6 +12,7 @@
 	<description>Backend parent module</description>
 	<modules>
 		<module>user.backend</module>
+		<module>core.backend</module>
 	</modules>
 	
 	<properties>

@@ -7,4 +7,12 @@
   </parent>
   <artifactId>user.backend</artifactId>
   <name>SWAG user backend project</name>
+  <dependencies>
+	<!-- Project Dependencies -->
+	<dependency>
+		<groupId>de.klingbeil.swag</groupId>
+		<artifactId>core.backend</artifactId>
+		<version>${project.version}</version>
+	</dependency>
+</dependencies>
 </project>

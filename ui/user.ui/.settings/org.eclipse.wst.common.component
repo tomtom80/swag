@@ -6,10 +6,8 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/webapp"/>
-        <dependent-module archiveName="user.backend-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/user.backend/user.backend">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <property name="context-root" value="user.ui"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/java"/>
         <property name="java-output-path" value="/user.ui/target/classes"/>
+        <property name="context-root" value="swag"/>
     </wb-module>
 </project-modules>

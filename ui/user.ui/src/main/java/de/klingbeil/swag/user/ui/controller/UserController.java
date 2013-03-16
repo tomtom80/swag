@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import de.klingbeil.swag.core.ui.controller.AbstractController;
 import de.klingbeil.swag.user.backend.model.User;
 import de.klingbeil.swag.user.backend.service.UserService;
 

@@ -19,10 +19,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import de.klingbeil.swag.user.backend.model.User;
 import de.klingbeil.swag.user.backend.service.UserService;
-import de.klingbeil.swag.user.config.context.ApplicationContextBackend;
+import de.klingbeil.swag.user.config.context.ApplicationContextUser;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {ApplicationContextBackend.class})
+@ContextConfiguration(classes = { ApplicationContextUser.class})
 @Transactional
 public class UserServiceIntegrationTest {
 

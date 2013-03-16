@@ -4,7 +4,7 @@ import java.util.Date;
 
 import org.springframework.stereotype.Component;
 
-import de.klingbeil.swag.user.backend.entity.PrePersistCallback;
+import de.klingbeil.swag.core.backend.entity.PrePersistCallback;
 import de.klingbeil.swag.user.backend.model.User;
 
 @Component

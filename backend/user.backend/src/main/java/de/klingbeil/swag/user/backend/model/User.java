@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
-import de.klingbeil.swag.user.backend.entity.EntityListener;
+import de.klingbeil.swag.core.backend.entity.EntityListener;
 
 @Entity
 @Table(name = "users")
