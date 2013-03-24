@@ -6,19 +6,19 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/webapp"/>
-        <dependent-module archiveName="core.ui-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/core.ui/core.ui">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="core.backend-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/core.backend/core.backend">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module archiveName="user.ui-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/user.ui/user.ui">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="user.backend-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/user.backend/user.backend">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="core.backend-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/core.backend/core.backend">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="core.ui-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/core.ui/core.ui">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="java-output-path" value="/web.ui/target/classes"/>
-        <property name="context-root" value="${project.name}"/>
+        <property name="context-root" value="SWAG_web_ui_project"/>
     </wb-module>
 </project-modules>
