@@ -12,11 +12,11 @@ import de.klingbeil.swag.user.controller.CreateUserViewController;
 public class ContentViewController implements Controller {
 
 	@Resource
-	CreateUserViewController userViewController;
+	CreateUserViewController createUserViewController;
 
 	@Override
 	public View getView() {
-		return userViewController.getView();
+		return createUserViewController.getView();
 	}
 
 }

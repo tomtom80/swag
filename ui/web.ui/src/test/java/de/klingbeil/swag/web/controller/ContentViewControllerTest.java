@@ -22,7 +22,7 @@ public class ContentViewControllerTest {
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 		contentViewController = new ContentViewController();
-		contentViewController.userViewController = userViewController;
+		contentViewController.createUserViewController = userViewController;
 	}
 
 	@Test
