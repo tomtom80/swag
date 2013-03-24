@@ -6,6 +6,7 @@
 		<artifactId>ui</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
+	<name>SWAG core ui project</name>
 	<artifactId>core.ui</artifactId>
 	<dependencies>
 		<dependency>
