@@ -8,7 +8,7 @@ import org.mockito.MockitoAnnotations;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.Component;
 
-import de.klingbeil.swag.user.view.UserView;
+import de.klingbeil.swag.user.view.CreateUserView;
 import de.klingbeil.swag.web.controller.ContentViewController;
 
 public class SwagUITest {
@@ -18,7 +18,7 @@ public class SwagUITest {
 	@Mock
 	private ContentViewController contentViewController;
 	@Mock
-	private UserView userView;
+	private CreateUserView userView;
 	@Mock
 	private Component userComponent;
 

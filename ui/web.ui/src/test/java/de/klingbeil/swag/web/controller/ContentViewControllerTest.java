@@ -8,15 +8,15 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import de.klingbeil.swag.user.controller.UserViewController;
-import de.klingbeil.swag.user.view.UserView;
-import de.klingbeil.swag.user.view.UserViewImpl;
+import de.klingbeil.swag.user.controller.CreateUserViewController;
+import de.klingbeil.swag.user.view.CreateUserView;
+import de.klingbeil.swag.user.view.CreateUserViewImpl;
 
 public class ContentViewControllerTest {
 
 	private ContentViewController contentViewController;
 	@Mock
-	private UserViewController userViewController;
+	private CreateUserViewController userViewController;
 
 	@Before
 	public void setUp() {
@@ -27,7 +27,7 @@ public class ContentViewControllerTest {
 
 	@Test
 	public void testGetView() {
-		UserView view = new UserViewImpl();
+		CreateUserView view = new CreateUserViewImpl();
 		when(userViewController.getView()).thenReturn(view);
 
 		assertSame(view, contentViewController.getView());

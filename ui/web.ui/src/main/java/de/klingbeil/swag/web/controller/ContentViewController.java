@@ -6,13 +6,13 @@ import org.springframework.stereotype.Component;
 
 import de.klingbeil.swag.core.controller.Controller;
 import de.klingbeil.swag.core.view.View;
-import de.klingbeil.swag.user.controller.UserViewController;
+import de.klingbeil.swag.user.controller.CreateUserViewController;
 
 @Component
 public class ContentViewController implements Controller {
 
 	@Resource
-	UserViewController userViewController;
+	CreateUserViewController userViewController;
 
 	@Override
 	public View getView() {
