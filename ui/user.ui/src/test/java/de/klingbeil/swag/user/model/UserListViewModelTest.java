@@ -15,10 +15,12 @@ public class UserListViewModelTest {
 	private static final String EMAIL = "hans@wurst.de";
 	private static final String LASTNAME = "Wurst";
 	private static final String FIRSTNAME = "Hans";
+	private static final Long ID = Long.valueOf(324);
 
 	@Test
 	public void testFromUserList() {
 		User user = new User();
+		user.setId(ID);
 		user.setFirstName(FIRSTNAME);
 		user.setLastName(LASTNAME);
 		user.setEmail(EMAIL);

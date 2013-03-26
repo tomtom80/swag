@@ -9,14 +9,14 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.Component;
 
 import de.klingbeil.swag.user.view.CreateUserView;
-import de.klingbeil.swag.web.controller.ContentViewController;
+import de.klingbeil.swag.web.controller.DefaultViewController;
 
 public class SwagUITest {
 
 	@Mock
 	private VaadinRequest request;
 	@Mock
-	private ContentViewController contentViewController;
+	private DefaultViewController contentViewController;
 	@Mock
 	private CreateUserView userView;
 	@Mock
@@ -28,7 +28,7 @@ public class SwagUITest {
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 		swagUI = new SwagUI();
-		swagUI.contentViewController = contentViewController;
+		swagUI.defaultViewController = contentViewController;
 
 	}
 

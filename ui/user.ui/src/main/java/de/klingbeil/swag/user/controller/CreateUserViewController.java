@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Component;
 
 import de.klingbeil.swag.core.controller.Controller;
+import de.klingbeil.swag.core.controller.ViewManager;
 import de.klingbeil.swag.core.view.View;
 import de.klingbeil.swag.user.backend.service.UserService;
 import de.klingbeil.swag.user.model.UserViewModel;
@@ -20,9 +21,15 @@ public class CreateUserViewController implements Controller {
 	@Resource
 	UserService userService;
 
+	@Resource
+	UserListViewController userListViewController;
+
+	@Resource
+	ViewManager viewManager;
+
 	@PostConstruct
 	void initView() {
-		view.setCreateUserCallback(createCreateUserCallback());
+		view.setSubmitButtonCallback(createCreateUserCallback());
 	}
 
 	@Override
@@ -35,8 +42,14 @@ public class CreateUserViewController implements Controller {
 			@Override
 			public void createUser(UserViewModel user) {
 				userService.create(user.toUser());
+				redirectToUserListView();
 			}
+
 		};
+	}
+
+	private void redirectToUserListView() {
+		viewManager.setContentView(userListViewController.getView());
 	}
 
 }

@@ -12,11 +12,19 @@ public class UserViewModelTest {
 	private static final String EMAIL = "hans@wurst.de";
 	private static final String LASTNAME = "Wurst";
 	private static final String FIRSTNAME = "Hans";
+	private static final Long ID = Long.valueOf(34);
 	private UserViewModel model;
 
 	@Before
 	public void setUp() {
 		model = new UserViewModel();
+	}
+
+	@Test
+	public void testId() {
+		model.setId(ID);
+
+		assertEquals(ID, model.getId());
 	}
 
 	@Test

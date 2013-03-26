@@ -7,4 +7,6 @@ import de.klingbeil.swag.user.model.UserViewModel;
 
 public interface UserListView extends View {
 	void setViewModel(List<UserViewModel> model);
+
+	void setCreateUserButtonCallback(Runnable callback);
 }

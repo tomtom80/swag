@@ -17,6 +17,7 @@ public class UserListViewModel {
 
 	private static UserViewModel toUserViewModel(User user) {
 		UserViewModel result = new UserViewModel();
+		result.setId(user.getId());
 		result.setFirstName(user.getFirstName());
 		result.setLastName(user.getLastName());
 		result.setEmail(user.getEmail());

@@ -10,11 +10,13 @@ public class UserUtil {
 		assertEquals(expected.getFirstName(), actual.getFirstName());
 		assertEquals(expected.getLastName(), actual.getLastName());
 		assertEquals(expected.getEmail(), actual.getEmail());
+		assertEquals(expected.getId(), actual.getId());
 	}
 
 	public static void assertUser(User expected, UserViewModel actual) {
 		assertEquals(expected.getFirstName(), actual.getFirstName());
 		assertEquals(expected.getLastName(), actual.getLastName());
 		assertEquals(expected.getEmail(), actual.getEmail());
+		assertEquals(expected.getId(), actual.getId());
 	}
 }

@@ -7,6 +7,15 @@ public class UserViewModel {
 	private String firstName;
 	private String lastName;
 	private String email;
+	private Long id;
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Long getId() {
+		return id;
+	}
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;

@@ -2,9 +2,10 @@ package de.klingbeil.swag.user.view;
 
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-
 import com.vaadin.data.util.BeanContainer;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.Table;
@@ -12,10 +13,18 @@ import com.vaadin.ui.VerticalLayout;
 
 import de.klingbeil.swag.user.model.UserViewModel;
 
+@org.springframework.stereotype.Component
 public class UserListViewImpl implements UserListView {
 
+	private static final String BEAN_ID_PROPERTY = "id";
+
 	private Layout component;
-	private List<UserViewModel> viewModel;
+	private BeanContainer<String, UserViewModel> viewModelContainer;
+	private Runnable createUserButtonCallback;
+
+	public UserListViewImpl() {
+		initComponet();
+	}
 
 	@Override
 	public Component getComponent() {
@@ -24,21 +33,42 @@ public class UserListViewImpl implements UserListView {
 
 	@Override
 	public void setViewModel(List<UserViewModel> model) {
-		this.viewModel = model;
+		viewModelContainer.addAll(model);
 	}
 
-	@PostConstruct
-	private Layout initComponet() {
+	@Override
+	public void setCreateUserButtonCallback(Runnable callback) {
+		this.createUserButtonCallback = callback;
+	}
+
+	private void initComponet() {
 		component = createMainComponent();
 		addUserTableComponent();
-		return component;
+		addCreateNewUserButton();
+	}
+
+	private void addCreateNewUserButton() {
+		Button button = new Button("Create");
+		button.addClickListener(createCreateUserButtonClickListener());
+		component.addComponent(button);
+	}
+
+	private ClickListener createCreateUserButtonClickListener() {
+		return new ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				createUserButtonCallback.run();
+			}
+		};
 	}
 
 	private void addUserTableComponent() {
-		BeanContainer<String, UserViewModel> userContainer = new BeanContainer<String, UserViewModel>(
+		viewModelContainer = new BeanContainer<String, UserViewModel>(
 				UserViewModel.class);
-		userContainer.addAll(viewModel);
-		Table userTable = new Table("User List", userContainer);
+		viewModelContainer.setBeanIdProperty(BEAN_ID_PROPERTY);
+		Table userTable = new Table("User List", viewModelContainer);
 		component.addComponent(userTable);
 	}
 

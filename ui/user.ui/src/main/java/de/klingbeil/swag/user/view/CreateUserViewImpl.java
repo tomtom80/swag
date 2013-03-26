@@ -31,7 +31,7 @@ public class CreateUserViewImpl implements CreateUserView {
 	}
 
 	@Override
-	public void setCreateUserCallback(CreateUserCallback callback) {
+	public void setSubmitButtonCallback(CreateUserCallback callback) {
 		this.callback = callback;
 	}
 

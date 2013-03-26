@@ -8,6 +8,6 @@ import de.klingbeil.swag.user.config.context.ApplicationContextUser;
 
 @Configuration
 @ComponentScan(basePackages = { "de.klingbeil.swag.user" })
-@Import({ ApplicationContextUser.class })
+@Import({ ApplicationContextUser.class, ApplicationContextCoreUi.class })
 public class ApplicationContextUserUi {
 }

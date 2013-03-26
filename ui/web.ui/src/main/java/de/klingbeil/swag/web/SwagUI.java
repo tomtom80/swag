@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.UI;
 
-import de.klingbeil.swag.web.controller.ContentViewController;
+import de.klingbeil.swag.web.controller.DefaultViewController;
 
 @Component
 @Scope("prototype")
@@ -17,11 +17,11 @@ public class SwagUI extends UI {
 	private static final long serialVersionUID = 1L;
 
 	@Resource
-	ContentViewController contentViewController;
+	DefaultViewController defaultViewController;
 
 	@Override
 	protected void init(VaadinRequest request) {
-		setContent(contentViewController.getView().getComponent());
+		setContent(defaultViewController.getView().getComponent());
 	}
 
 }
