@@ -17,7 +17,7 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>${project.name}</finalName>
+		<finalName>SWAG</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -193,6 +193,20 @@
 						</lifecycleMappingMetadata>
 					</configuration>
 				</plugin>
+				
+				<plugin>
+					<groupId>org.cloudfoundry</groupId>
+					<artifactId>cf-maven-plugin</artifactId>
+					<version>1.0.0.M1</version>
+					<configuration>
+						<server>swag-cloudfoundry</server>
+						<target>http://api.cloudfoundry.com</target>
+						<url>swag.cloudfoundry.com</url>
+						<appname>swag</appname>
+						<memory>512</memory>
+					</configuration>
+				</plugin>
+
 			</plugins>
 		</pluginManagement>
 	</build>
