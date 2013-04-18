@@ -9,6 +9,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.TextField;
@@ -22,7 +23,10 @@ import de.klingbeil.swag.user.view.CreateUserView;
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class CreateUserViewImpl implements CreateUserView {
 
+	private static final long serialVersionUID = 1L;
+
 	private Layout component;
+	private Layout controlsComponent;
 
 	private TextField firstNameTextField;
 	private TextField lastNameTextField;
@@ -36,6 +40,11 @@ public class CreateUserViewImpl implements CreateUserView {
 	}
 
 	@Override
+	public String getCaption() {
+		return "Create User";
+	}
+
+	@Override
 	public void setSubmitButtonCallback(CreateUserCallback callback) {
 		this.callback = callback;
 	}
@@ -43,17 +52,36 @@ public class CreateUserViewImpl implements CreateUserView {
 	@PostConstruct
 	private Layout initComponet() {
 		component = createMainComponent();
+		addCaptionComponent();
 		addFirstNameComponent();
 		addLastNameComponent();
 		addEmailComponent();
-		addSubmitComponent();
+		addControlsComponent();
 		return component;
+	}
+
+	private void addCaptionComponent() {
+		final Label caption = new Label(getCaption());
+		caption.addStyleName("view-caption");
+		component.addComponent(caption);
+	}
+
+	private void addControlsComponent() {
+		controlsComponent = createControlsComponent();
+		addSubmitComponent();
+		component.addComponent(controlsComponent);
+	}
+
+	private HorizontalLayout createControlsComponent() {
+		HorizontalLayout result = new HorizontalLayout();
+		result.addStyleName("view-controls");
+		return result;
 	}
 
 	private void addSubmitComponent() {
 		Button submitButton = createButton("Submit");
 		submitButton.addClickListener(createButtonClickListener());
-		component.addComponent(submitButton);
+		controlsComponent.addComponent(submitButton);
 	}
 
 	private void addEmailComponent() {

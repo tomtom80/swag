@@ -10,8 +10,7 @@ import org.mockito.MockitoAnnotations;
 
 import com.vaadin.ui.Component;
 
-import de.klingbeil.swag.core.controller.internal.ViewManagerImpl;
-import de.klingbeil.swag.core.view.ContentView;
+import de.klingbeil.swag.core.view.MainLayout;
 import de.klingbeil.swag.core.view.View;
 
 public class ViewManagerImplTest {
@@ -19,14 +18,22 @@ public class ViewManagerImplTest {
 	private ViewManagerImpl viewManager;
 
 	@Mock
-	private ContentView contentView;
+	private MainLayout mainlayout;
 	@Mock
 	private Component viewComponent;
 
 	class TestView implements View {
+		private static final long serialVersionUID = 1L;
+
 		@Override
 		public Component getComponent() {
 			return viewComponent;
+		}
+
+		@Override
+		public String getCaption() {
+
+			return "testView";
 		}
 	}
 
@@ -34,7 +41,7 @@ public class ViewManagerImplTest {
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 		viewManager = new ViewManagerImpl();
-		viewManager.contentView = contentView;
+		viewManager.mainLayout = mainlayout;
 	}
 
 	@Test
@@ -43,7 +50,7 @@ public class ViewManagerImplTest {
 
 		viewManager.setContentView(view);
 
-		verify(contentView).setContent(view);
-		assertSame(contentView, viewManager.getContentView());
+		verify(mainlayout).setContent(view);
+		assertSame(mainlayout, viewManager.getContentView());
 	}
 }

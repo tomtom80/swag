@@ -8,24 +8,26 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 
 import de.klingbeil.swag.core.controller.ViewManager;
-import de.klingbeil.swag.core.view.ContentView;
+import de.klingbeil.swag.core.view.MainLayout;
 import de.klingbeil.swag.core.view.View;
 
 @Component
 @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class ViewManagerImpl implements ViewManager {
 
+	private static final long serialVersionUID = 1L;
+
 	@Resource
-	ContentView contentView;
+	MainLayout mainLayout;
 
 	@Override
 	public void setContentView(View contentView) {
-		this.contentView.setContent(contentView);
+		this.mainLayout.setContent(contentView);
 	}
 
 	@Override
 	public View getContentView() {
-		return contentView;
+		return mainLayout;
 	}
 
 }

@@ -10,6 +10,8 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalLayout;
@@ -21,10 +23,13 @@ import de.klingbeil.swag.user.view.UserListView;
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class UserListViewImpl implements UserListView {
 
+	private static final long serialVersionUID = 1L;
+
 	private static final String BEAN_ID_PROPERTY = "id";
 
 	private Layout component;
-	private BeanContainer<String, UserViewModel> viewModelContainer;
+	private Layout controlsComponent;
+	private BeanContainer<Long, UserViewModel> viewModelContainer;
 	private Runnable createUserButtonCallback;
 
 	public UserListViewImpl() {
@@ -34,6 +39,11 @@ public class UserListViewImpl implements UserListView {
 	@Override
 	public Component getComponent() {
 		return component;
+	}
+
+	@Override
+	public String getCaption() {
+		return "List of Users";
 	}
 
 	@Override
@@ -48,14 +58,33 @@ public class UserListViewImpl implements UserListView {
 
 	private void initComponet() {
 		component = createMainComponent();
+		addCaptionComponent();
 		addUserTableComponent();
+		addControlsComponent();
+	}
+
+	private void addCaptionComponent() {
+		final Label caption = new Label(getCaption());
+		caption.addStyleName("view-caption");
+		component.addComponent(caption);
+	}
+
+	private void addControlsComponent() {
+		controlsComponent = createControlsComponent();
 		addCreateNewUserButton();
+		component.addComponent(controlsComponent);
+	}
+
+	private HorizontalLayout createControlsComponent() {
+		HorizontalLayout result = new HorizontalLayout();
+		result.addStyleName("view-controls");
+		return result;
 	}
 
 	private void addCreateNewUserButton() {
 		Button button = new Button("Create");
 		button.addClickListener(createCreateUserButtonClickListener());
-		component.addComponent(button);
+		controlsComponent.addComponent(button);
 	}
 
 	private ClickListener createCreateUserButtonClickListener() {
@@ -70,10 +99,10 @@ public class UserListViewImpl implements UserListView {
 	}
 
 	private void addUserTableComponent() {
-		viewModelContainer = new BeanContainer<String, UserViewModel>(
+		viewModelContainer = new BeanContainer<Long, UserViewModel>(
 				UserViewModel.class);
 		viewModelContainer.setBeanIdProperty(BEAN_ID_PROPERTY);
-		Table userTable = new Table("User List", viewModelContainer);
+		Table userTable = new Table("", viewModelContainer);
 		component.addComponent(userTable);
 	}
 
