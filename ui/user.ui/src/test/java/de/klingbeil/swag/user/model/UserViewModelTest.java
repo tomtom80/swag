@@ -12,6 +12,8 @@ public class UserViewModelTest {
 	private static final String EMAIL = "hans@wurst.de";
 	private static final String LASTNAME = "Wurst";
 	private static final String FIRSTNAME = "Hans";
+	private static final String USERNAME = "hansW";
+	private static final String PASSWORD = "secret";
 	private static final Long ID = Long.valueOf(34);
 	private UserViewModel model;
 
@@ -49,10 +51,25 @@ public class UserViewModelTest {
 	}
 
 	@Test
+	public void testUsername() {
+		model.setUsername(USERNAME);
+
+		assertEquals(USERNAME, model.getUsername());
+	}
+
+	@Test
+	public void testPassword() {
+		model.setPassword(PASSWORD);
+
+		assertEquals(PASSWORD, model.getPassword());
+	}
+
+	@Test
 	public void testToUser() {
 		model.setFirstName(FIRSTNAME);
 		model.setLastName(LASTNAME);
 		model.setEmail(EMAIL);
+		model.setUsername(USERNAME);
 
 		UserUtil.assertUser(model, model.toUser());
 	}

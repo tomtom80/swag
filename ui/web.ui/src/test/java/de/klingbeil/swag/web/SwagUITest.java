@@ -14,7 +14,7 @@ import com.vaadin.ui.Component;
 import de.klingbeil.swag.core.controller.ViewManager;
 import de.klingbeil.swag.core.navigator.UriFragmentNavigator;
 import de.klingbeil.swag.core.view.View;
-import de.klingbeil.swag.user.controller.internal.UserListViewController;
+import de.klingbeil.swag.user.controller.internal.LoginViewController;
 
 public class SwagUITest {
 
@@ -47,6 +47,6 @@ public class SwagUITest {
 
 		swagUI.init(request);
 
-		verify(navigator).navigateTo(UserListViewController.URI_FRAGMENT);
+		verify(navigator).navigateTo(LoginViewController.URI_FRAGMENT);
 	}
 }

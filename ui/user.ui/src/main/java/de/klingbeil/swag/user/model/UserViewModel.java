@@ -8,6 +8,8 @@ public class UserViewModel {
 	private String lastName;
 	private String email;
 	private Long id;
+	private String password;
+	private String username;
 
 	public void setId(Long id) {
 		this.id = id;
@@ -39,6 +41,22 @@ public class UserViewModel {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getPassword() {
+		return password;
 	}
 
 	public User toUser() {

@@ -12,7 +12,7 @@ import com.vaadin.ui.UI;
 
 import de.klingbeil.swag.core.controller.ViewManager;
 import de.klingbeil.swag.core.navigator.UriFragmentNavigator;
-import de.klingbeil.swag.user.controller.internal.UserListViewController;
+import de.klingbeil.swag.user.controller.internal.LoginViewController;
 
 @Theme("swag")
 @Component
@@ -31,6 +31,6 @@ public class SwagUI extends UI {
 	protected void init(VaadinRequest request) {
 		navigator.autoRegisterAllControllers();
 		setContent(viewManager.getContentView().getComponent());
-		navigator.navigateTo(UserListViewController.URI_FRAGMENT);
+		navigator.navigateTo(LoginViewController.URI_FRAGMENT);
 	}
 }

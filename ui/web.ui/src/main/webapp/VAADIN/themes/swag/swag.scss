@@ -1,33 +1,14 @@
-@import "../base/base.scss";
+@import "../reindeer/legacy-styles.css";
 @import "header.scss";
 @import "sidebar.scss";
 @import "main.scss";
-@import "common.scss";
-@import "components/button.scss";
-@import "components/textfield.scss";
-@import "components/combobox.scss";
-@import "components/label.scss";
-@import "components/table.scss";
-@import "components/window.scss";
 @import "components/view.scss";
-@import "icons/fontello.scss";
-@import "fonts/open-sans.scss";
-@import "mixins.scss";
 
 @mixin swag {
-  @include base;
   @include header;
   @include sidebar;
   @include main;
-  
-  @include swag-common;
-  
-  @include swag-button;
-  @include swag-combobox;
-  @include swag-label;
-  @include swag-table;
-  @include swag-textfield;
-  @include swag-window;
+
   @include swag-view;
    
 }

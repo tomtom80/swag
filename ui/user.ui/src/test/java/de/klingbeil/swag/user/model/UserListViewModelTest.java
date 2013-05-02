@@ -15,6 +15,8 @@ public class UserListViewModelTest {
 	private static final String EMAIL = "hans@wurst.de";
 	private static final String LASTNAME = "Wurst";
 	private static final String FIRSTNAME = "Hans";
+	private static final String USERNAME = "hansW";
+	private static final String PASSWORD = "secret";
 	private static final Long ID = Long.valueOf(324);
 
 	@Test
