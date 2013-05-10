@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator" />
+
+
+<appender name="PERFORMANCE_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>D:/HEILER/SWAG/logs/swag_performance.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<fileNamePattern>D:/HEILER/SWAG/logs/swag_performance.%d{yyyy-MM-dd}-%i.log.zip</fileNamePattern>
+
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<!-- or whenever the file size reaches 50MB -->
+				<maxFileSize>50MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+
+			<!-- keep 10 days' worth of history -->
+			<maxHistory>10</maxHistory>
+		</rollingPolicy>
+
+		<encoder>
+			<pattern>%d{MM/dd HH:mm:ss.SSS} [%thread] [%X{user}] - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="PERFORMANCE" level="ALL" additivity="false">
+		<appender-ref ref="PERFORMANCE_FILE" />
+	</logger>
+	
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{MM/dd HH:mm:ss.SSS} [%thread] [%X{user}] %-3level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="de.klingbeil" level="INFO" />
+	<logger name="org.springframework" level="DEBUG" />
+
+	<root level="WARN">
+		<appender-ref ref="STDOUT" />
+	</root>
+</configuration>

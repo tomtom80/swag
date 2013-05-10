@@ -17,12 +17,15 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import de.klingbeil.swag.config.context.ApplicationContextCore;
+import de.klingbeil.swag.config.context.ApplicationContextDataSource;
+import de.klingbeil.swag.config.context.ApplicationContextUser;
 import de.klingbeil.swag.user.backend.model.User;
 import de.klingbeil.swag.user.backend.service.UserService;
-import de.klingbeil.swag.user.config.context.ApplicationContextUser;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = { ApplicationContextUser.class})
+@ContextConfiguration(classes = { ApplicationContextUser.class,
+		ApplicationContextDataSource.class, ApplicationContextCore.class })
 @Transactional
 public class UserServiceIntegrationTest {
 
@@ -33,18 +36,17 @@ public class UserServiceIntegrationTest {
 	private String email;
 	private String firstName;
 	private String lastName;
-	private User user;
 
 	@Before
 	public void setUp() {
 		email = "foo@bar.com";
 		firstName = "Fred";
 		lastName = "Feuerstein";
-		user = createValidUser(email, firstName, lastName);
 	}
 
 	@Test
 	public void testCreate() {
+		User user = createValidUser(email, firstName, lastName);
 
 		userService.create(user);
 
@@ -54,6 +56,7 @@ public class UserServiceIntegrationTest {
 
 	@Test
 	public void testUpdate() throws Exception {
+		User user = createValidUser(email, firstName, lastName);
 		String newFirstName = "Wilma";
 		User createdUser = userService.create(user);
 		createdUser.setFirstName(newFirstName);
@@ -72,6 +75,7 @@ public class UserServiceIntegrationTest {
 
 	@Test
 	public void testFindByEmail() throws Exception {
+		User user = createValidUser(email, firstName, lastName);
 		userService.create(user);
 
 		List<User> foundUsers = userService.findByEmail(email);

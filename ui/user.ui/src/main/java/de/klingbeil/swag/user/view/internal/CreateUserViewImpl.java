@@ -1,9 +1,12 @@
 package de.klingbeil.swag.user.view.internal;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
+
+import ru.xpoft.vaadin.VaadinMessageSource;
 
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -34,6 +37,9 @@ public class CreateUserViewImpl implements CreateUserView {
 
 	private CreateUserCallback callback;
 
+	@Resource
+	private VaadinMessageSource messages;
+
 	@Override
 	public Component getComponent() {
 		return component;
@@ -41,7 +47,7 @@ public class CreateUserViewImpl implements CreateUserView {
 
 	@Override
 	public String getCaption() {
-		return "Create User";
+		return messages.getMessage("view.create.user.caption");
 	}
 
 	@Override
@@ -50,14 +56,13 @@ public class CreateUserViewImpl implements CreateUserView {
 	}
 
 	@PostConstruct
-	private Layout initComponet() {
+	private void initView() {
 		component = createMainComponent();
 		addCaptionComponent();
 		addFirstNameComponent();
 		addLastNameComponent();
 		addEmailComponent();
 		addControlsComponent();
-		return component;
 	}
 
 	private void addCaptionComponent() {
@@ -79,19 +84,23 @@ public class CreateUserViewImpl implements CreateUserView {
 	}
 
 	private void addSubmitComponent() {
-		Button submitButton = createButton("Submit");
+		Button submitButton = createButton(messages.getMessage(
+				"view.create.user.submit"));
 		submitButton.addClickListener(createButtonClickListener());
 		controlsComponent.addComponent(submitButton);
 	}
 
 	private void addEmailComponent() {
-		Label emailLabel = createLabel("Email");
+		Label emailLabel = createLabel(messages.getMessage(
+				"view.create.user.email"));
 		emailTextField = createTextField();
 		component.addComponent(emailLabel);
 		component.addComponent(emailTextField);
 	}
 
 	private void addLastNameComponent() {
+//		Label lastNameLabel = createLabel(messageSource.getMessage(
+//				"view.create.user.lastName", null, Locale.US));
 		Label lastNameLabel = createLabel("Last Name");
 		lastNameTextField = createTextField();
 		component.addComponent(lastNameLabel);
@@ -99,6 +108,8 @@ public class CreateUserViewImpl implements CreateUserView {
 	}
 
 	private void addFirstNameComponent() {
+//		Label firstNameLabel = createLabel(messageSource.getMessage(
+//				"view.create.user.firstName", null, Locale.US));
 		Label firstNameLabel = createLabel("First Name");
 		firstNameTextField = createTextField();
 		component.addComponent(firstNameLabel);

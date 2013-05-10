@@ -17,6 +17,8 @@ import de.klingbeil.swag.core.navigator.UriFragmentNavigator;
 @Component
 public class UriFragmentNavigatorImpl implements UriFragmentNavigator {
 
+	private static final long serialVersionUID = 1L;
+
 	private static final Logger logger = LoggerFactory
 			.getLogger(UriFragmentNavigatorImpl.class);
 

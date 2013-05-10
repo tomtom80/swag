@@ -2,8 +2,13 @@ package de.klingbeil.swag.user.view.internal;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
+
+import ru.xpoft.vaadin.VaadinMessageSource;
 
 import com.vaadin.data.util.BeanContainer;
 import com.vaadin.ui.Button;
@@ -32,7 +37,11 @@ public class UserListViewImpl implements UserListView {
 	private BeanContainer<Long, UserViewModel> viewModelContainer;
 	private Runnable createUserButtonCallback;
 
-	public UserListViewImpl() {
+	@Resource
+	private VaadinMessageSource messages;
+
+	@PostConstruct
+	public void initView() {
 		initComponet();
 	}
 
@@ -43,7 +52,7 @@ public class UserListViewImpl implements UserListView {
 
 	@Override
 	public String getCaption() {
-		return "List of Users";
+		return messages.getMessage("view.user.list.caption");
 	}
 
 	@Override
@@ -82,7 +91,7 @@ public class UserListViewImpl implements UserListView {
 	}
 
 	private void addCreateNewUserButton() {
-		Button button = new Button("Create");
+		Button button = new Button(messages.getMessage("view.user.list.create"));
 		button.addClickListener(createCreateUserButtonClickListener());
 		controlsComponent.addComponent(button);
 	}

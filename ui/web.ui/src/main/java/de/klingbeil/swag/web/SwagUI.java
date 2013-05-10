@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.vaadin.annotations.Theme;
+import com.vaadin.annotations.Title;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.UI;
 
@@ -14,6 +15,7 @@ import de.klingbeil.swag.core.controller.ViewManager;
 import de.klingbeil.swag.core.navigator.UriFragmentNavigator;
 import de.klingbeil.swag.user.controller.internal.LoginViewController;
 
+@Title("SWAG a project for fun")
 @Theme("swag")
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)

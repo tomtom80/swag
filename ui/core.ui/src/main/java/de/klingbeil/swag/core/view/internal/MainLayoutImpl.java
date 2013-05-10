@@ -4,11 +4,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 
@@ -53,9 +51,9 @@ public class MainLayoutImpl implements MainLayout {
 		mainComponent = createMainComponent();
 		sidebarComponent = createSidebarComponent();
 		contentComponent = createContentComponent();
+		rootComponent.addComponent(headerComponent);
 		mainComponent.addComponent(sidebarComponent);
 		mainComponent.addComponent(contentComponent);
-		rootComponent.addComponent(headerComponent);
 		rootComponent.addComponent(mainComponent);
 	}
 
@@ -74,15 +72,26 @@ public class MainLayoutImpl implements MainLayout {
 	private CssLayout createHeaderComponent() {
 		CssLayout result = new CssLayout();
 		result.addStyleName(MainLayout.STYLE_HEADER);
-		result.addComponent(new Image(null, new ThemeResource(
-				"img/swag-logo.jpg")));
+		result.addComponent(createLogoContainer());
 		return result;
+	}
+
+	private HorizontalLayout createLogoContainer() {
+		HorizontalLayout result = new HorizontalLayout();
+		result.addStyleName(MainLayout.STYLE_LOGO);
+		result.addComponent(createLogoLabel());
+		return result;
+	}
+
+	private Label createLogoLabel() {
+		Label logoCaption = new Label("SWAG");
+		logoCaption.addStyleName("logo-caption");
+		return logoCaption;
 	}
 
 	private CssLayout createSidebarComponent() {
 		CssLayout result = new CssLayout();
 		result.addStyleName(MainLayout.STYLE_SIDEBAR);
-		result.addComponent(new Label("Sidebar"));
 		return result;
 	}
 

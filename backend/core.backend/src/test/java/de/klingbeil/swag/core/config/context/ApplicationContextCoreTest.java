@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import de.klingbeil.swag.config.context.ApplicationContextDataSource;
+
 @Configuration
 @EnableTransactionManagement
 @ComponentScan(basePackages = {"de.klingbeil.swag.core.backend"})

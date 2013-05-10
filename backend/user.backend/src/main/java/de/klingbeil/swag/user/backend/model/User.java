@@ -22,6 +22,8 @@ public class User {
 	private Long id;
 	@Version
 	private Long version;
+	@Column(name = "username", nullable = false)
+	private String username;
 	@Column(name = "first_name", nullable = false)
 	private String firstName;
 	@Column(name = "last_name", nullable = false)
@@ -49,6 +51,14 @@ public class User {
 		return version;
 	}
 
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
 	public String getFirstName() {
 		return firstName;
 	}
@@ -67,6 +77,9 @@ public class User {
 
 	public void setEmail(String eMail) {
 		this.email = eMail;
+		if (getUsername() == null) {
+			setUsername(eMail);
+		}
 	}
 
 	public String getEmail() {
@@ -94,6 +107,7 @@ public class User {
 		StringBuilder builder = new StringBuilder();
 		builder.append("id=" + id);
 		builder.append(" version=" + version);
+		builder.append(" username=" + username);
 		builder.append(" firstName=" + firstName);
 		builder.append(" lastName=" + lastName);
 		builder.append(" eMail=" + email);

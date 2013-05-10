@@ -3,8 +3,13 @@ package de.klingbeil.swag.user.view.internal;
 import java.util.Collection;
 import java.util.HashSet;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
+
+import ru.xpoft.vaadin.VaadinMessageSource;
 
 import com.vaadin.data.fieldgroup.DefaultFieldGroupFieldFactory;
 import com.vaadin.data.fieldgroup.FieldGroup;
@@ -35,6 +40,8 @@ import de.klingbeil.swag.user.view.LoginView;
 public class LoginViewImpl implements LoginView {
 
 	private static final long serialVersionUID = 1L;
+	private static final String USERNAME_PROPERTY_ID = "username";
+	private static final String PASSWORT_PROPERTY_ID = "password";
 
 	private Panel mainContainer;
 	private Layout mainLayout;
@@ -44,7 +51,11 @@ public class LoginViewImpl implements LoginView {
 	private LoginCallback callback;
 	private UserViewModel model;
 
-	public LoginViewImpl() {
+	@Resource
+	VaadinMessageSource messages;
+
+	@PostConstruct
+	public void initView() {
 		initModel();
 		initComponet();
 	}
@@ -56,7 +67,7 @@ public class LoginViewImpl implements LoginView {
 
 	@Override
 	public String getCaption() {
-		return "Login";
+		return messages.getMessage("view.login.caption");
 	}
 
 	@Override
@@ -66,8 +77,8 @@ public class LoginViewImpl implements LoginView {
 
 	@Override
 	public void setComponentError(String errorMsg) {
-		Notification.show("Authentication Failure", errorMsg,
-				Type.ERROR_MESSAGE);
+		Notification.show(messages.getMessage("view.login.errormsg.caption"),
+				errorMsg, Type.ERROR_MESSAGE);
 	}
 
 	private void initModel() {
@@ -113,18 +124,19 @@ public class LoginViewImpl implements LoginView {
 	}
 
 	private void addUsernameComponent() {
-		final TextField usernameTextField = formGroup.buildAndBind("Username",
-				"username", TextField.class);
+		final TextField usernameTextField = formGroup.buildAndBind(
+				messages.getMessage("view.login.username"),
+				USERNAME_PROPERTY_ID, TextField.class);
+
 		usernameTextField.setRequired(true);
-		usernameTextField.setRequiredError("Username");
 		formLayout.addComponent(usernameTextField);
 	}
 
 	private void addPasswordComponent() {
-		final PasswordField passwordField = formGroup.buildAndBind("Password",
-				"password", PasswordField.class);
+		final PasswordField passwordField = formGroup.buildAndBind(
+				messages.getMessage("view.login.password"),
+				PASSWORT_PROPERTY_ID, PasswordField.class);
 		passwordField.setRequired(true);
-		passwordField.setRequiredError("Password");
 		formLayout.addComponent(passwordField);
 	}
 
@@ -141,7 +153,8 @@ public class LoginViewImpl implements LoginView {
 	}
 
 	private void addSubmitComponent() {
-		Button submitButton = createButton("Login");
+		Button submitButton = createButton(messages
+				.getMessage("view.login.login"));
 		submitButton.addClickListener(createButtonClickListener());
 		controlsLayout.addComponent(submitButton);
 	}
@@ -160,7 +173,8 @@ public class LoginViewImpl implements LoginView {
 					formGroup.commit();
 					callback.login(model);
 				} catch (CommitException e) {
-					setComponentError("username and password must not be empty");
+					setComponentError(messages
+							.getMessage("view.login.empty.error"));
 				}
 			}
 

@@ -44,10 +44,8 @@
 		<cglib.version>2.2.2</cglib.version>
 		<junit.version>4.11</junit.version>
 		<mockito.version>1.8.4</mockito.version>
-		<hamcrest.version>1.1</hamcrest.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<target.dir>target</target.dir>
-		<webapp.project.name>ui/web.ui</webapp.project.name>
+		<webapp.project.name>web.ui</webapp.project.name>
 	</properties>
 
 	<dependencies>
@@ -236,12 +234,6 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.hamcrest</groupId>
-			<artifactId>hamcrest-all</artifactId>
-			<version>${hamcrest.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
 			<version>${spring.version}</version>
@@ -250,22 +242,17 @@
 	</dependencies>
 
 	<build>
-		<outputDirectory>${basedir}/${target.dir}/classes</outputDirectory>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.5.1</version>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.7</source>
+					<target>1.7</target>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
 
-	<profiles>
-		<profile>
-			<id>development</id>
-		</profile>
-	</profiles>
 </project>

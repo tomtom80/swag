@@ -6,15 +6,11 @@
 		<artifactId>ui</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	
+
 	<name>SWAG web ui project</name>
 	<packaging>war</packaging>
 	<artifactId>web.ui</artifactId>
 
-	<properties>
-		<gwt.version>2.5.1</gwt.version>
-		<gwt.plugin.version>${gwt.version}</gwt.plugin.version>
-	</properties>
 
 	<dependencies>
 		<dependency>
@@ -23,7 +19,7 @@
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
-	
+
 	<build>
 		<finalName>SWAG</finalName>
 		<plugins>
@@ -45,176 +41,11 @@
 					</archive>
 				</configuration>
 			</plugin>
-			 <plugin>
-                <groupId>org.mortbay.jetty</groupId>
-                <artifactId>maven-jetty-plugin</artifactId>
-                <version>6.1.24</version>
-                <configuration>
-					<stopPort>9966</stopPort>
-					<stopKey>SWAG</stopKey>
-					<!-- Redeploy every second if changes are detected -->
-					<scanIntervalSeconds>1</scanIntervalSeconds>
-
-					<!-- We could also activate manual redeployment where we'd have to hit 
-						enter in the console where Jetty is running to redeploy. -->
-					<!-- <reload>manual</reload> -->
-					<webAppConfig>
-						<contextPath>/SWAG</contextPath>
-						<baseResource implementation="org.mortbay.resource.ResourceCollection">
-							<resourcesAsCSV>
-								src/main/webapp,${project.build.directory}/${project.build.finalName}
-							</resourcesAsCSV>
-						</baseResource>
-						<!-- Add the backend API's classes to Jetty's classpath so that the 
-							server will be able to load the class files. -->
-						<extraClasspath>../user.ui/target/classes</extraClasspath>
-						<extraClasspath>../core.ui/target/classes</extraClasspath>
-						<extraClasspath>../../backend/core.backend/target/classes</extraClasspath>
-						<extraClasspath>../../backend/user.backend/target/classes</extraClasspath>
-					</webAppConfig>
-
-					<!-- Add the backend API's classes as an additional scan target so that 
-						Jetty will realize when these classes have changed. -->
-					<scanTargets>
-						<scanTarget>../user.ui/target/classes</scanTarget>
-						<scanTarget>../core.ui/target/classes</scanTarget>
-						<scanTarget>../../backend/core.backend/target/classes</scanTarget>
-						<scanTarget>../../backend/user.backend/target/classes</scanTarget>
-					</scanTargets>
-				</configuration>
+			<plugin>
+				<groupId>com.vaadin</groupId>
+				<artifactId>vaadin-maven-plugin</artifactId>
+				<version>${vaadin.version}</version>
 			</plugin>
 		</plugins>
-		
 	</build>
-
-	<profiles>
-		<profile>
-			<id>development</id>
-			<properties>
-				<!-- Redirect the compiler output to the WEB-INF folder for this profile 
-					where Jetty can scan it for changes. -->
-				<target.dir>target/${project.build.finalName}/WEB-INF</target.dir>
-			</properties>
-			<dependencies>
-				<!-- Redefine the dependency on the sub-module with the scope set to 
-					'provided'. The dependency does not have to be copied to WEB-INF/lib in the 
-					development profile as we already have added this dependency to Jetty's classpath 
-					in the Jetty configuration section. -->
-				<dependency>
-					<groupId>de.klingbeil.swag</groupId>
-					<artifactId>user.ui</artifactId>
-					<version>${project.version}</version>
-					<scope>provided</scope>
-				</dependency>
-				<dependency>
-					<groupId>de.klingbeil.swag</groupId>
-					<artifactId>user.backend</artifactId>
-					<version>${project.version}</version>
-					<scope>provided</scope>
-				</dependency>
-				<dependency>
-					<groupId>de.klingbeil.swag</groupId>
-					<artifactId>core.ui</artifactId>
-					<version>${project.version}</version>
-					<scope>provided</scope>
-				</dependency>
-				<dependency>
-					<groupId>de.klingbeil.swag</groupId>
-					<artifactId>core.backend</artifactId>
-					<version>${project.version}</version>
-					<scope>provided</scope>
-				</dependency>
-			</dependencies>
-		</profile>
-		<!-- As we are doing "inplace" GWT compilation, ensure the gwt -->
-		<!-- directory is cleaned properly -->
-		<profile>
-			<id>clean-widgetset</id>
-			<build>
-				<plugins>
-					<plugin>
-						<artifactId>maven-clean-plugin</artifactId>
-						<version>2.4.1</version>
-						<configuration>
-							<filesets>
-								<fileset>
-									<directory>src/main/webapp/VAADIN/gwt-unitCache</directory>
-								</fileset>
-								<fileset>
-									<directory>src/main/webapp/VAADIN/widgetsets</directory>
-								</fileset>
-							</filesets>
-						</configuration>
-						<executions>
-							<execution>
-								<goals>
-									<goal>clean</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-
-		<profile>
-			<id>compile-widgetset</id>
-			<dependencies>
-				<dependency>
-					<groupId>com.google.gwt</groupId>
-					<artifactId>gwt-user</artifactId>
-					<version>${gwt.version}</version>
-					<scope>provided</scope>
-				</dependency>
-				<dependency>
-					<groupId>com.google.gwt</groupId>
-					<artifactId>gwt-dev</artifactId>
-					<version>${gwt.version}</version>
-					<scope>provided</scope>
-				</dependency>
-			</dependencies>
-			<build>
-				<plugins>
-					<!-- Compile custom GWT components or widget dependencies with the GWT 
-						compiler -->
-					<plugin>
-						<groupId>com.vaadin</groupId>
-						<artifactId>vaadin-maven-plugin</artifactId>
-						<version>${vaadin.plugin.version}</version>
-						<configuration>
-							<extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
-							<!-- <runTarget>mobilemail</runTarget> -->
-							<!-- We are doing "inplace" but into subdir VAADIN/widgetsets. This 
-								way compatible with Vaadin eclipse plugin. -->
-							<webappDirectory>${basedir}/src/main/webapp/VAADIN/widgetsets
-							</webappDirectory>
-							<hostedWebapp>${basedir}/src/main/webapp/VAADIN/widgetsets
-							</hostedWebapp>
-							<noServer>true</noServer>
-							<!-- Remove draftCompile when project is ready -->
-							<draftCompile>false</draftCompile>
-							<compileReport>true</compileReport>
-							<style>OBF</style>
-							<strict>true</strict>
-							<runTarget>http://localhost:8080/</runTarget>
-						</configuration>
-						<executions>
-							<execution>
-								<configuration>
-									<!-- if you don't specify any modules, the plugin will find them -->
-									<!-- <modules> <module>com.vaadin.demo.mobilemail.gwt.ColorPickerWidgetSet</module> 
-										</modules> -->
-								</configuration>
-								<goals>
-									<goal>resources</goal>
-									<goal>update-widgetset</goal>
-									<goal>compile</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
 </project>

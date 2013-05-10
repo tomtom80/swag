@@ -63,6 +63,17 @@ public class UserTest {
 		user.setEmail(eMail);
 
 		assertEquals(eMail, user.getEmail());
+		assertEquals(eMail, user.getUsername());
+	}
+
+	@Test
+	public void testUsernameAlreadySetDontOverrideBySettingEmail() {
+		String username = "fixedUsername";
+		user.setUsername(username);
+
+		user.setEmail(eMail);
+
+		assertEquals(username, user.getUsername());
 	}
 
 	@Test
@@ -81,5 +92,14 @@ public class UserTest {
 		user.setModificationTime(modificationTime);
 
 		assertEquals(modificationTime, user.getModificationTime());
+	}
+
+	@Test
+	public void testUsername() {
+		String userName = "billy";
+
+		user.setUsername(userName);
+
+		assertEquals(userName, user.getUsername());
 	}
 }
