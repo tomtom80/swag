@@ -33,7 +33,8 @@ public class EntityListenerTest {
 		testCallback.setCalled(false);
 	}
 
-	// (tk) TODO
+	// (tk) TODO Hey Tom Du hast vergessen Dich abzumelden als Erinnerung dient dieser Kommentar.
+	// Werde Dich nun abmelden. Schoener Gruss Timo.
 	@Ignore("Find a solution for entity manager to additionally scan for test entities ")
 	@Test
 	public void testPrePersistIsCalled() {
