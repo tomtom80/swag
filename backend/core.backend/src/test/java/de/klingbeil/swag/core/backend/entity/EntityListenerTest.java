@@ -8,17 +8,55 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.stereotype.Component;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
-import de.klingbeil.swag.core.config.context.ApplicationContextCoreTest;
+import de.klingbeil.swag.testhelper.backend.entity.TestEntity;
+import de.klingbeil.swag.testhelper.backend.entity.TestEntityListener;
+import de.klingbeil.swag.testhelper.backend.entity.TestEntitySubClass;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {ApplicationContextCoreTest.class})
+@ContextConfiguration({
+		"classpath*:META-INF/spring/applicationContext-persistence-test.xml",
+		"classpath*:META-INF/spring/applicationContext-core-backend-test.xml"})
+@Transactional
 public class EntityListenerTest {
+
+	@Component
+	public static class TestCallback implements PrePersistCallback<TestEntity>,
+			PreUpdateCallback<TestEntity> {
+		private boolean isCalled;
+
+		@Override
+		public Class<TestEntity> getEntityType() {
+			return TestEntity.class;
+		}
+
+		@Override
+		public void prePersist(TestEntity entity) {
+			isCalled = true;
+		}
+
+		@Override
+		public void preUpdate(TestEntity entity) {
+			isCalled = true;
+		}
+
+		public boolean isCalled() {
+			return isCalled;
+		}
+
+		public void setCalled(boolean isCalled) {
+			this.isCalled = isCalled;
+		}
+
+	}
+
+	private static final String ENTITY_ID = "132";
 
 	private EntityListener listener;
 	@Resource
@@ -33,12 +71,9 @@ public class EntityListenerTest {
 		testCallback.setCalled(false);
 	}
 
-	// (tk) TODO Hey Tom Du hast vergessen Dich abzumelden als Erinnerung dient dieser Kommentar.
-	// Werde Dich nun abmelden. Schoener Gruss Timo.
-	@Ignore("Find a solution for entity manager to additionally scan for test entities ")
 	@Test
 	public void testPrePersistIsCalled() {
-		entityManager.persist(new TestEntity());
+		entityManager.persist(createTestEntity());
 
 		assertTrue(TestEntityListener.isPrePersist());
 	}
@@ -66,7 +101,7 @@ public class EntityListenerTest {
 
 	@Test
 	public void testPreUpdateCallback() throws Exception {
-		listener.preUpdate(new TestEntity());
+		listener.preUpdate(createTestEntity());
 
 		assertTrue(testCallback.isCalled());
 	}
@@ -83,6 +118,12 @@ public class EntityListenerTest {
 		listener.preUpdate(new TestEntitySubClass());
 
 		assertTrue(testCallback.isCalled());
+	}
+
+	private static TestEntity createTestEntity() {
+		TestEntity entity = new TestEntity();
+		entity.setId(ENTITY_ID);
+		return entity;
 	}
 
 }

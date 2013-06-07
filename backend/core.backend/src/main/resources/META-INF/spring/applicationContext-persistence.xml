@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:sec="http://www.springframework.org/schema/security" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd   http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd   http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd   http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd   http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+		<property name="jpaPropertyMap">
+			<map>
+				<entry key="org.hibernate.flushMode" value="COMMIT" />
+			</map>
+		</property>
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+		depends-on="flyway">
+		<property name="persistenceXmlLocation" value="${persistence.xmlLocation}" />
+		<property name="dataSource" ref="dataSource" />
+		<property name="persistenceUnitName" value="${persistence.unitName}" />
+		<property name="persistenceUnitPostProcessors">
+			<list>
+				<bean
+					class="de.klingbeil.swag.core.backend.spring.EntityScannerPostProcessor" />
+			</list>
+		</property>
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+		</property>
+	</bean>
+
+	<bean class="de.klingbeil.swag.core.backend.spring.EntityClassPathScanner"
+		id="entityClassPathScanner">
+		<property name="packages">
+			<list>
+				<value>de.klingbeil.swag</value>
+			</list>
+		</property>
+	</bean>
+
+
+	<!-- Flyway -->
+	<bean id="flyway" class="com.googlecode.flyway.core.Flyway"
+		init-method="migrate">
+		<property name="dataSource" ref="dataSource" />
+		<property name="locations" value="db/migration/${database.type}" />
+	</bean>
+
+	<beans profile="h2,mysql">
+		<bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource"
+			destroy-method="close">
+			<property name="driverClass" value="${database.driverClassName}" />
+			<property name="jdbcUrl" value="${database.url}" />
+			<property name="username" value="${database.username}" />
+			<property name="password" value="${database.password}" />
+		</bean>
+	</beans>
+
+	<beans profile="cloudbees">
+		<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+			<property name="jndiName" value="java:comp/env/jdbc/swagDB" />
+		</bean>
+	</beans>
+
+
+	<!-- Property files configuration -->
+	<beans profile="mysql">
+		<bean id="propertyLocation"
+			class="de.klingbeil.swag.core.backend.spring.LoggingPropertyPlaceholderConfigurer">
+			<property name="locations">
+				<list>
+					<value>classpath*:META-INF/spring/*-mysql.properties</value>
+					<value>classpath*:META-INF/spring/*-default.properties</value>
+					<value>file:${user.home}/.swag/configuration/*.properties</value>
+					<value>file:${swag.configuration}/configuration.properties</value>
+				</list>
+			</property>
+			<property name="ignoreResourceNotFound" value="true" />
+		</bean>
+	</beans>
+
+	<beans profile="h2">
+		<bean id="propertyLocation" primary="true"
+			class="de.klingbeil.swag.core.backend.spring.LoggingPropertyPlaceholderConfigurer">
+			<property name="locations">
+				<list>
+					<value>classpath*:META-INF/spring/*-h2.properties</value>
+					<value>classpath*:META-INF/spring/*-default.properties</value>
+					<value>file:${user.home}/.swag/configuration/configuration.properties
+					</value>
+					<value>file:${swag.configuration}/configuration.properties
+					</value>
+				</list>
+			</property>
+			<property name="ignoreResourceNotFound" value="true" />
+		</bean>
+	</beans>
+	<beans profile="cloudbees">
+		<bean id="propertyLocation" primary="true"
+			class="de.klingbeil.swag.core.backend.spring.LoggingPropertyPlaceholderConfigurer">
+			<property name="locations">
+				<list>
+					<value>classpath*:META-INF/spring/*-cloudbees.properties</value>
+					<value>classpath*:META-INF/spring/*-default.properties</value>
+				</list>
+			</property>
+			<property name="ignoreResourceNotFound" value="true" />
+		</bean>
+	</beans>
+
+</beans>

@@ -14,5 +14,11 @@
 		<artifactId>core.backend</artifactId>
 		<version>${project.version}</version>
 	</dependency>
+	<dependency>
+		<groupId>de.klingbeil.swag</groupId>
+		<artifactId>testhelper.backend</artifactId>
+		<version>${project.version}</version>
+		<scope>test</scope>
+	</dependency>
 </dependencies>
 </project>

@@ -17,15 +17,15 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import de.klingbeil.swag.config.context.ApplicationContextCore;
-import de.klingbeil.swag.config.context.ApplicationContextDataSource;
-import de.klingbeil.swag.config.context.ApplicationContextUser;
 import de.klingbeil.swag.user.backend.model.User;
 import de.klingbeil.swag.user.backend.service.UserService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = { ApplicationContextUser.class,
-		ApplicationContextDataSource.class, ApplicationContextCore.class })
+@ContextConfiguration({
+		"classpath*:META-INF/spring/applicationContext-persistence-test.xml",
+		"classpath*:META-INF/spring/applicationContext-user-backend.xml",
+		"classpath*:META-INF/spring/applicationContext-user-backend-test.xml",
+		"classpath*:META-INF/spring/applicationContext-user-repository.xml" })
 @Transactional
 public class UserServiceIntegrationTest {
 
