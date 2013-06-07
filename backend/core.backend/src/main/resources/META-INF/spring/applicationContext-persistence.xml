@@ -63,7 +63,7 @@
 
 	<beans profile="cloudbees">
 		<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
-			<property name="jndiName" value="java:comp/env/jdbc/swagDBEU" />
+			<property name="jndiName" value="java:comp/env/jdbc/swagEUDB" />
 		</bean>
 	</beans>
 

@@ -34,7 +34,6 @@
 	</appender>
 
 	<logger name="de.klingbeil" level="INFO" />
-	<logger name="com.mysql" level="DEBUG" />
 	<logger name="org.springframework" level="DEBUG" />
 
 	<root level="WARN">
